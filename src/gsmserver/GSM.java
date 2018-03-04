@@ -83,7 +83,7 @@ public class GSM extends Application {
                 while(true) {
                     socket = serverSocket.accept();
                     InetAddress inetAddress = socket.getInetAddress();
-
+                    
                     Platform.runLater(() -> taStatus.appendText("Connected to a client at " + new Date() + "\n" + 
                             "Client IP address is " + inetAddress.getHostAddress() + "\n"));
                     
