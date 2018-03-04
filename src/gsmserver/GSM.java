@@ -31,9 +31,10 @@ public class GSM extends Application {
         
         Button btStart = new Button("Start Server");
         Button btStop = new Button("Stop Server");
+        Button btClear = new Button("Clear Window");
         
         HBox hBoxForButtons = new HBox(10);
-        hBoxForButtons.getChildren().addAll(btStart, btStop);
+        hBoxForButtons.getChildren().addAll(btStart, btStop, btClear);
         hBoxForButtons.setAlignment(Pos.CENTER);
         borderPane.setBottom(hBoxForButtons);
         
@@ -65,6 +66,10 @@ public class GSM extends Application {
                 taStatus.appendText("Server was shut down.\n");
             }
         });
+        
+        btClear.setOnAction(e -> {
+        	taStatus.setText("");
+        });
     }
     
     private class TaskClass implements Runnable {
@@ -81,7 +86,8 @@ public class GSM extends Application {
 
                     Platform.runLater(() -> taStatus.appendText("Connected to a client at " + new Date() + "\n" + 
                             "Client IP address is " + inetAddress.getHostAddress() + "\n"));
-
+                    
+                    DBManagement dbManagement = new DBManagement();
                     DataInputStream inputFromClient = new DataInputStream(socket.getInputStream());
                     
                     while(true) {
@@ -98,7 +104,10 @@ public class GSM extends Application {
                         Float humidity = inputFromClient.readFloat();
                         Platform.runLater(() -> taStatus.appendText("Received a humidity value from the Client: " + 
                                 String.format(Locale.US, "%.2f", humidity) + " %\n"));
+                        dbManagement.insertValuesToDB(temperature, humidity);
+                        Platform.runLater(() -> taStatus.appendText("Data was loaded into db.\n"));
                     }
+                    dbManagement.closeConnection();
                 }
             }
             catch (IOException ex) {
