@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class DBManagement {
 	private Connection connection;
-	private String queryString = "insert into sensordata (date, temperature, humidity) values (?, ?, ?)";
+	private String updateString = "insert into sensordata (date, temperature, humidity) values (?, ?, ?)";
 	
 	public DBManagement() {
 		try {
@@ -27,7 +27,7 @@ public class DBManagement {
 	
 	public void insertValuesToDB(Float temperature, Float humidity) {
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(queryString);
+			PreparedStatement preparedStatement = connection.prepareStatement(updateString);
 			preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
 			preparedStatement.setDouble(2, temperature);
 			preparedStatement.setDouble(3, humidity);
