@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class DBManagement {
@@ -27,9 +28,9 @@ public class DBManagement {
 	public void insertValuesToDB(Float temperature, Float humidity) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(queryString);
-			preparedStatement.setString(1, new Date().toString());
-			preparedStatement.setString(2, temperature.toString());
-			preparedStatement.setString(3, humidity.toString());
+			preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
+			preparedStatement.setDouble(2, temperature);
+			preparedStatement.setDouble(3, humidity);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
