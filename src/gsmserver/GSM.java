@@ -43,6 +43,9 @@ public class GSM extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         
+        thread = new Thread(new TaskClass());
+        thread.start();
+        
         btStart.setOnAction(e -> {
             thread = new Thread(new TaskClass());
             thread.start();
