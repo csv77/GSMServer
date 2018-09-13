@@ -99,16 +99,17 @@ public class GSM extends Application {
                             Platform.runLater(() -> taStatus.appendText("Client has disconnected.\n"));
                             break;
                         }
-                        
-                        Float temperature = inputFromClient.readFloat();
-                        Platform.runLater(() -> taStatus.appendText("Received a temperature value from the Client: " + 
-                                String.format(Locale.US, "%.2f", temperature) + " C°\n"));
-
-                        Float humidity = inputFromClient.readFloat();
-                        Platform.runLater(() -> taStatus.appendText("Received a humidity value from the Client: " + 
-                                String.format(Locale.US, "%.2f", humidity) + " %\n"));
-                        dbManagement.insertValuesToDB(temperature, humidity);
-                        Platform.runLater(() -> taStatus.appendText("Data was loaded into db.\n"));
+                        else if(ch == '1') {
+	                        Float temperature = inputFromClient.readFloat();
+	                        Platform.runLater(() -> taStatus.appendText("Received a temperature value from the Client: " + 
+	                                String.format(Locale.US, "%.2f", temperature) + " C°\n"));
+	
+	                        Float humidity = inputFromClient.readFloat();
+	                        Platform.runLater(() -> taStatus.appendText("Received a humidity value from the Client: " + 
+	                                String.format(Locale.US, "%.2f", humidity) + " %\n"));
+	                        dbManagement.insertValuesToDB(temperature, humidity);
+	                        Platform.runLater(() -> taStatus.appendText("Data was loaded into db.\n"));
+                        }
                     }
                     dbManagement.closeConnection();
                 }
